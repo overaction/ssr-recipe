@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import express from 'express';
-import {staticRouter} from 'react-router-dom';
+import {StaticRouter} from 'react-router-dom';
 import App from './App';
 
 const app = express();
@@ -9,9 +9,9 @@ const app = express();
 const serverRender = (req, res, next) => {
     const context = {};
     const jsx = (
-        <staticRouter location={req.url} context={context}>
+        <StaticRouter location={req.url} context={context}>
             <App />
-        </staticRouter>
+        </StaticRouter>
     );
     const root = ReactDOMServer.renderToString(jsx);
     res.send(root);
