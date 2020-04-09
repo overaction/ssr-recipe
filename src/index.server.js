@@ -1,5 +1,27 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import express from 'express';
+import {staticRouter} from 'react-router-dom';
+import App from './App';
+
+const app = express();
+
+const serverRender = (req, res, next) => {
+    const context = {};
+    const jsx = (
+        <staticRouter location={req.url} context={context}>
+            <App />
+        </staticRouter>
+    );
+    const root = ReactDOMServer.renderToString(jsx);
+    res.send(root);
+};
+
+app.use(serverRender);
+
+app.listen(5000, () => {
+    console.log('Running on http://localhost:5000');
+});
 
 const html = ReactDOMServer.renderToString(
     <div>Server side render</div>
